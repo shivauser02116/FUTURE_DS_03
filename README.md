@@ -143,7 +143,7 @@ All metrics computed on the clean dataset of 41,176 contacts:
 | **$>4$** | 27,668 | 0 | 0 | 27,668 | 4.82 | 4.84% |
 
 - **Yearly mean euribor3m:** 2008 = **4.82**, 2009 = **1.23**, 2010 = **0.81**.
-- **Seasonality Myth:** In aggregate, May shows a pooled conversion rate of **6.44%** (887 subs / 13,767 calls). However, examining May by year reveals that seasonality is an artifact of the macroeconomic shift:
+- **Seasonality Myth:** In aggregate, May shows a pooled conversion rate of **6.44%** (886 subs / 13,767 calls). However, examining May by year reveals that seasonality is an artifact of the macroeconomic shift:
   - May 2008: 7,762 calls $\to$ **3.09%** conversion
   - May 2009: 5,793 calls $\to$ **9.05%** conversion
   - May 2010: 212 calls $\to$ **57.55%** conversion
