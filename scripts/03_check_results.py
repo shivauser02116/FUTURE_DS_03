@@ -407,6 +407,19 @@ def main():
         except Exception as e:
             record_result(f"Day of week '{dow}' check", False, str(e), f"{exp_rate}%")
 
+    # 15. README content check: neither "file:///" nor "~40,000"
+    try:
+        readme_path = "README.md"
+        with open(readme_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        has_file_uri = "file:///" in content
+        has_40k = "~40,000" in content
+        passed = (not has_file_uri) and (not has_40k)
+        actual = f"file:/// present: {has_file_uri}, ~40,000 present: {has_40k}"
+        record_result("README.md contains neither 'file:///' nor '~40,000'", passed, actual, "neither present")
+    except Exception as e:
+        record_result("README.md contains neither 'file:///' nor '~40,000'", False, str(e), "neither present")
+
     print("\n================================================================================")
     print("TEST SUITE SUMMARY")
     print(f"Total Checks:  {total_checks}")

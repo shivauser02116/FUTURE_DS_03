@@ -7,7 +7,7 @@
 
 Direct telemarketing campaigns for long-term retail bank deposits face significant trade-offs between outbound sales effort and customer conversion yield. When outbound call volume escalates without strategic targeting, operational costs rise, agent fatigue sets in, and customer contact lists suffer diminishing returns.
 
-This project analyzes **41,176 telemarketing contacts** from a major Portuguese retail banking institution between **May 2008 and November 2010** to evaluate:
+This project analyzes **41,176 telemarketing contacts** from a Portuguese banking institution between **May 2008 and November 2010** to evaluate:
 1. **Funnel Progression & Engagement:** Where clients drop out of the interaction sequence, using an operational call engagement threshold (>60 seconds).
 2. **Channel Performance:** The comparative conversion efficiency of cellular versus fixed telephone channels across distinct campaign years.
 3. **Effort Efficiency & Diminishing Returns:** The marginal conversion yield of repeated contact attempts and the point of campaign exhaustion.
@@ -16,7 +16,25 @@ This project analyzes **41,176 telemarketing contacts** from a major Portuguese 
 
 ---
 
-## 2. Dataset Citation & License
+## 2. Dashboard
+
+The complete 4-page executive dashboard is available as a PDF: [`dashboard/FUTURE_DS_03_dashboard.pdf`](dashboard/FUTURE_DS_03_dashboard.pdf).
+
+### Page 1: Marketing Funnel Architecture & Call Duration Diagnostics
+![Page 1: Marketing Funnel Architecture & Call Duration Diagnostics](images/page_1.png)
+
+### Page 2: Channel Effectiveness & Macroeconomic Shifts
+![Page 2: Channel Effectiveness & Macroeconomic Shifts](images/page_2.png)
+
+### Page 3: Campaign Effort, Yield & Demographic Response
+![Page 3: Campaign Effort, Yield & Demographic Response](images/page_3.png)
+
+### Page 4: Strategic Recommendations & Methodological Constraints
+![Page 4: Strategic Recommendations & Methodological Constraints](images/page_4.png)
+
+---
+
+## 3. Dataset Citation & License
 
 - **Dataset:** Bank Marketing Dataset (`bank-additional-full.csv`)
 - **Source:** UC Irvine Machine Learning Repository
@@ -27,14 +45,14 @@ This project analyzes **41,176 telemarketing contacts** from a major Portuguese 
 
 ---
 
-## 3. Tools & AI Assistance Disclosure
+## 4. Tools & AI Assistance Disclosure
 
 - **Runtime & Libraries:** Python 3 (standard dependencies: `pandas`, `numpy`, `matplotlib`). No other external dependencies.
 - **AI Disclosure:** An AI assistant (Google Antigravity / Gemini) helped write and review the code and draft this documentation; all numerical results, metrics, and figures were empirically computed and programmatically verified against the underlying data.
 
 ---
 
-## 4. Analytical Framing & Methodological Guardrails
+## 5. Analytical Framing & Methodological Guardrails
 
 - **Strict Funnel Architecture:** The dataset records outbound telemarketing calls; it contains **no website visitor, pageview, ad click, impression, or inbound lead stages**. The funnel is structured strictly as:
   $$\text{Contacted} \longrightarrow \text{Engaged} \longrightarrow \text{Subscribed}$$
@@ -45,9 +63,9 @@ This project analyzes **41,176 telemarketing contacts** from a major Portuguese 
 
 ---
 
-## 5. Data Cleaning & Transformation Summary
+## 6. Data Cleaning & Transformation Summary
 
-Data cleaning is automated in [`scripts/01_clean_bank.py`](file:///Users/shivaprasad/Downloads/FUTURE_DS_03/scripts/01_clean_bank.py) and fully audited in [`docs/cleaning_log.md`](file:///Users/shivaprasad/Downloads/FUTURE_DS_03/docs/cleaning_log.md):
+Data cleaning is automated in [`scripts/01_clean_bank.py`](scripts/01_clean_bank.py) and fully audited in [`docs/cleaning_log.md`](docs/cleaning_log.md):
 
 1. **Raw Dimensions & Ingestion:** Read `data/bank-additional-full.csv` (`sep=";"`) containing **41,188 rows** and **21 columns**.
 2. **Missing Values ('unknown'):** Categorical unknowns were kept as explicit valid categories. In the raw dataset:
@@ -70,7 +88,7 @@ Data cleaning is automated in [`scripts/01_clean_bank.py`](file:///Users/shivapr
 
 ---
 
-## 6. Funnel Key Performance Indicators (KPIs)
+## 7. Funnel Key Performance Indicators (KPIs)
 
 All metrics computed on the clean dataset of 41,176 contacts:
 
@@ -86,7 +104,7 @@ All metrics computed on the clean dataset of 41,176 contacts:
 
 ---
 
-## 7. Key Findings & Empirical Insights
+## 8. Key Findings & Empirical Insights
 
 ### A. Call Duration & Stage Drop-off
 - **Short-call futility:** Calls lasting $\le 60$ seconds represent **10.40%** of all calls (4,284 attempts) but resulted in virtually zero conversions (exactly **1** subscription, 0.02% conversion rate).
@@ -100,54 +118,63 @@ All metrics computed on the clean dataset of 41,176 contacts:
 ### B. Channel Performance: Cellular vs. Telephone
 - Overall, **cellular outreach achieved 14.74% conversion** (3,852 subs / 26,135 calls) compared to **5.23% for fixed telephone** (787 subs / 15,041 calls) — a **2.8$\times$ relative performance advantage**.
 - The cellular advantage remained robust across all three campaign years:
-  - **2008:** Cellular 5.73% vs Telephone 3.93%
-  - **2009:** Cellular 19.90% vs Telephone 14.67%
-  - **2010:** Cellular 57.66% vs Telephone 28.35%
+  - **2008:** Cellular 5.73% vs Telephone 3.93% (1.46$\times$ ratio)
+  - **2009:** Cellular 19.90% vs Telephone 14.67% (1.36$\times$ ratio)
+  - **2010:** Cellular 57.66% vs Telephone 28.35% (2.03$\times$ ratio)
 
 ### C. Campaign Effort & Severe Diminishing Returns
 - **88.0% of all conversions** occur within the first 3 touches:
-  - Contact 1: 49.6% cumulative subscriptions (2,300 subs, 13.04% conversion)
+  - Contact 1: 49.6% cumulative subscriptions (2,299 subs, 13.04% conversion)
   - Contact 2: 75.7% cumulative subscriptions (1,211 subs, 11.46% conversion)
-  - Contact 3: 88.0% cumulative subscriptions (573 subs, 10.75% conversion)
+  - Contact 3: 88.0% cumulative subscriptions (574 subs, 10.75% conversion)
 - **Extreme waste in 4+ attempts:** Clients dialed 4 or more times received **50,945 calls (48.18% of total dialing effort)**, yet generated only **555 subscriptions (11.96% of conversions)**, converting at just **7.27%**.
 
 ### D. Macroeconomic Shifts & The May Seasonality Deconstruction
-- Conversion rate is strongly inversely correlated with the 3-month Euribor benchmark ($r = -0.31$):
-  - Euribor $>4\%$ (2008 high-rate regime): 27,668 calls, **4.84%** conversion (mean Euribor 4.85)
-  - Euribor $1–4\%$ (2009 transitional regime): 9,601 calls, **15.78%** conversion (mean Euribor 1.62)
-  - Euribor $\le 1\%$ (2010 low-rate regime): 3,907 calls, **45.71%** conversion (mean Euribor 0.81)
-- **Seasonality Myth:** In aggregate, May shows a low 6.45% conversion rate. However, examining May by year reveals that seasonality is an artifact of the macroeconomic shift:
-  - May 2008: 7,762 calls $\to$ **3.09%** conversion (Euribor ~4.9%)
-  - May 2009: 5,793 calls $\to$ **9.05%** conversion (Euribor ~1.3%)
-  - May 2010: 212 calls $\to$ **57.55%** conversion (Euribor ~0.7%)
+- Conversion rate is moderately negatively correlated with the 3-month Euribor benchmark ($r = -0.31$):
+  - Computed band mean for $\le 1$: **0.79** (3,907 calls, **45.71%** conversion)
+  - Computed band mean for $1–4$: **1.33** (9,601 calls, **15.78%** conversion)
+  - Computed band mean for $>4$: **4.82** (27,668 calls, **4.84%** conversion)
+
+#### Euribor Band Rows by Period Year
+| Euribor Band | 2008 | 2009 | 2010 | Total Rows | Mean Euribor3m | Conversion Rate (%) |
+|:---|---:|---:|---:|---:|---:|---:|
+| **$\le 1$** | 0 | 2,048 | 1,859 | 3,907 | 0.79 | 45.71% |
+| **$1–4$** | 14 | 9,388 | 199 | 9,601 | 1.33 | 15.78% |
+| **$>4$** | 27,668 | 0 | 0 | 27,668 | 4.82 | 4.84% |
+
+- **Yearly mean euribor3m:** 2008 = **4.82**, 2009 = **1.23**, 2010 = **0.81**.
+- **Seasonality Myth:** In aggregate, May shows a pooled conversion rate of **6.44%** (887 subs / 13,767 calls). However, examining May by year reveals that seasonality is an artifact of the macroeconomic shift:
+  - May 2008: 7,762 calls $\to$ **3.09%** conversion
+  - May 2009: 5,793 calls $\to$ **9.05%** conversion
+  - May 2010: 212 calls $\to$ **57.55%** conversion
 
 ### E. Prior Contact & High-Converting Demographics
 - **Warm Leads Lift:** Clients with prior campaign success (`poutcome == 'success'`) converted at **65.11%** (vs 8.83% for cold non-existent leads, a 7.4$\times$ lift). Previously contacted clients (`previously_contacted == 'Yes'`) converted at **63.83%**.
-- **High-affinity Demographics:** Students (**31.43%**, 875 contacts) and retirees (**25.26%**, 1,718 contacts) converted at rates 3.6$\times$ to 4.5$\times$ higher than blue-collar workers (**6.90%**, 9,253 contacts).
+- **High-affinity Demographics:** Students (**31.43%**, 875 contacts) and retirees (**25.26%**, 1,718 contacts) converted at rates **4.6$\times$** and **3.7$\times$** higher than blue-collar workers (**6.90%**, 9,253 contacts).
 
 ---
 
-## 8. Strategic Recommendations (Ranked)
+## 9. Strategic Recommendations (Ranked)
 
 1. **Enforce an Automated 3-Contact Frequency Cap:**
-   - *Finding:* Attempts 4+ consume **48.18% of total dials** (50,945 calls) for only **11.96% of subscriptions**.
-   - *Action:* Hard-cap outbound dialer campaigns at 3 attempts per client. This will save ~40,000 dial attempts with less than 12% loss in total subscriptions, immediately freeing up nearly half of operational agent capacity.
+   - *Finding:* Capping outreach at 3 attempts per client removes only the calls beyond the third attempt: $\sum \max(\text{campaign} - 3, 0) = 28,043$ calls (26.5% of all 105,735 calls). Up to 555 subscriptions (12.0%) came from clients with 4+ attempts, so that is the maximum volume at risk.
+   - *Action:* Hard-cap outbound dialer campaigns at 3 attempts per client. Beyond 3 touches, conversion drops to 7.27%, making repeated retries an inefficient use of dialer resources.
 2. **Prioritize Warm Leads & Prior Campaign Successes in Routing Queues:**
    - *Finding:* Prior campaign success converts at **65.11%** (vs 8.83% for cold leads).
    - *Action:* Create a dedicated VIP queue for clients previously contacted in past campaigns with positive outcomes (`pdays != 999` and `poutcome == 'success'`) and route them immediately to senior sales specialists.
 3. **Transition Outbound Dialing Infrastructure to Cellular Channels:**
-   - *Finding:* Cellular outreach delivers **14.74% conversion vs 5.23% for telephone** (2.8$\times$ higher across all 3 years).
-   - *Action:* Deprecate landline lists; mandate verified mobile telephone numbers as the primary contact channel in CRM customer intake.
-4. **Dynamically Align Campaign Intensity with Macroeconomic Rate Cuts:**
-   - *Finding:* Demand surges during low interest-rate environments (Euribor $\le 1\%$ yields **45.71% conversion** vs 4.84% when Euribor $>4\%$).
-   - *Action:* Align deposit marketing spend with European Central Bank rate-easing cycles when fixed-return savings products become competitively attractive to retail depositors.
-5. **Reallocate Marketing Mix Toward Students & Retirees:**
+   - *Finding:* The 2.8$\times$ figure (14.74% cellular vs 5.23% fixed telephone) is the raw overall ratio and is inflated because telephone calls were concentrated in 2008 (a low-conversion year). The within-year ratios are 1.46$\times$ in 2008 (5.73% vs 3.93%), 1.36$\times$ in 2009 (19.90% vs 14.67%), and 2.03$\times$ in 2010 (57.66% vs 28.35%).
+   - *Action:* Prefer mobile numbers where available and A/B test before changing list policy.
+4. **Evaluate Macroeconomic Interest Rate Regimes as a Hypothesis to Test:**
+   - *Finding:* Conversion rates are higher during low-interest periods ($\le 1\%$ Euribor converts at 45.71% vs 4.84% when $>4\%$). However, because interest rate drops were entangled with a progressive operational shift toward warm re-contact lists (from 0.1% warm in 2008 to 35.2% warm in 2010), these macroeconomic and cohort effects cannot be separated observationally.
+   - *Action:* Treat macroeconomic alignment as a hypothesis to test: design controlled tests during shifting benchmark interest rate regimes to isolate whether deposit demand changes independently of list warmth.
+5. **Test Tailored Offers for Students and Retirees:**
    - *Finding:* Students (31.43%) and retirees (25.26%) exhibit the highest propensity to convert, yet blue-collar workers represent the single largest volume pool (9,253 contacts) with the lowest yield (6.90%).
-   - *Action:* Restructure lead generation lists away from indiscriminate blue-collar outreach toward tailored deposit products: starter savings for students and capital preservation deposits for retirees.
+   - *Action:* Test tailored offers for students and retirees (such as starter savings accounts for students and capital preservation deposits for retirees) rather than relying on indiscriminate high-volume outreach.
 
 ---
 
-## 9. Analytical Limitations
+## 10. Analytical Limitations
 
 1. **Proxy Funnel Architecture:** Data tracks direct outbound phone contacts, without digital impressions, web visits, or inbound MQL stages.
 2. **Post-Hoc Duration Metric:** Call duration is only known after call termination. It cannot be used as an ex-ante operational dialing rule.
@@ -158,7 +185,7 @@ All metrics computed on the clean dataset of 41,176 contacts:
 
 ---
 
-## 10. How to Reproduce
+## 11. How to Reproduce
 
 ### Prerequisites
 Install the standard dependencies:
@@ -176,13 +203,13 @@ python3 scripts/01_clean_bank.py
 # 2. Build multi-page PDF dashboard and standalone 16:9 page images
 python3 scripts/02_build_dashboard.py
 
-# 3. Run automated verification test suite (87 checks)
+# 3. Run automated verification test suite
 python3 scripts/03_check_results.py
 ```
 
 ---
 
-## 11. Repository Structure
+## 12. Repository Structure
 
 ```
 FUTURE_DS_03/
@@ -202,7 +229,7 @@ FUTURE_DS_03/
 ├── scripts/
 │   ├── 01_clean_bank.py             # Data cleaning and feature engineering
 │   ├── 02_build_dashboard.py        # Matplotlib visualization and PDF generation
-│   └── 03_check_results.py          # Automated verification test suite (87 checks)
+│   └── 03_check_results.py          # Automated verification test suite
 ├── requirements.txt                 # Project dependencies (pandas, numpy, matplotlib)
 └── README.md                        # Comprehensive project documentation
 ```
